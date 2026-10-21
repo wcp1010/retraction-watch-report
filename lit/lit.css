@@ -1,0 +1,195 @@
+/* Literature page. Same tokens and type as the report (index.html): Type Garden "Paper" palette, MIT typography
+   (Neue Haas Grotesk Display above 20px, Text at 20px and below; Helvetica Neue / Arial fallbacks), Roboto Mono
+   for data and UI labels. Behind the centre column, one swarm of dots per study, one dot per paper it covers. */
+:root{
+  --paper:#F3EEE4;   /* Paper background */
+  --ink:#111111;     /* Paper type; also the spotlight colour */
+  --flower:#FF3B1F;  /* Paper flower: the accent for "active" */
+  --leaf:#1C2B8F;    /* Paper stem & leaf */
+  --petal:#FFD2C4;   /* Paper flower line: hover, selection */
+  --ink-2:#47433B; --ink-3:#6B655A; --rule:#D8CFBF; --card:#FAF7F1;
+  --neutral:#5C564C;
+  --ctx:#CDC3B2;     /* dots at rest */
+  --pend:#ABA394;
+  --dim:#E2DBCF;
+  --shadow:rgba(17,17,17,.13);
+  --display:"neue-haas-grotesk-display","Neue Haas Grotesk Display Pro","Neue Haas Grotesk Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --text:"neue-haas-grotesk-text","Neue Haas Grotesk Text Pro","Neue Haas Grotesk Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,Menlo,Consolas,monospace;
+  --col-left:max(16px,4vw); --bar-h:52px;
+  --col-w:min(34rem,44vw);
+  --halo:2px 0 0 var(--paper),-2px 0 0 var(--paper),0 2px 0 var(--paper),0 -2px 0 var(--paper),
+    1.5px 1.5px 0 var(--paper),-1.5px 1.5px 0 var(--paper),1.5px -1.5px 0 var(--paper),-1.5px -1.5px 0 var(--paper),
+    0 0 6px var(--paper),0 0 10px var(--paper);   /* labels over dots: a paper-coloured ring, no box */
+  --panel-h:0px;     /* phones: height of the swarm panel under the top bar (set by lit.js) */
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:calc(var(--bar-h) + var(--panel-h) + 24px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.25 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--ink-3)}
+a:hover{text-decoration-color:var(--ink)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+p{margin:0 0 .9em}
+::selection{background:var(--petal)}
+
+/* ---------- the field ---------- */
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
+.panelbg{display:none}
+
+/* ---------- top bar (same as the report) ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--ink)}
+.bar-in{height:var(--bar-h);display:flex;align-items:center;gap:1.4rem;padding-inline:var(--col-left)}
+.brand{font:700 1rem/1 var(--text);letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.toc{display:flex;gap:1rem;list-style:none;margin:0;padding:0;flex:1;min-width:0}
+.toc a{font:400 .72rem/1 var(--mono);color:var(--ink-3);text-decoration:none;white-space:nowrap;padding:.4rem 0}
+.toc a:hover{color:var(--ink)}
+.toc a[aria-current="true"]{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--flower);text-decoration-thickness:2px;text-underline-offset:6px}
+.tools{display:flex;align-items:center;gap:.6rem;margin-left:auto;min-width:0}
+.sealed-flag{font:500 .68rem/1 var(--mono);color:var(--ink-2);border:1px dashed var(--ink-3);padding:.4rem .55rem;white-space:nowrap}
+
+/* ---------- centre column ---------- */
+main{position:relative;z-index:2;pointer-events:none;transition:opacity .35s ease}
+main .blk{pointer-events:auto}
+.col{width:var(--col-w);margin:0 auto;padding:calc(var(--bar-h) + 9vh) 2.6rem 8rem;
+  background:linear-gradient(90deg,rgba(243,238,228,0) 0,rgba(243,238,228,.9) 2.4rem,rgba(243,238,228,.9) calc(100% - 2.4rem),rgba(243,238,228,0) 100%);
+  min-height:100vh;box-sizing:content-box}
+h1,h2,h3{text-wrap:balance}
+h1{font:700 clamp(2.9rem,5vw,4.6rem)/.9 var(--display);letter-spacing:-.035em;margin:0 0 1.2rem}
+h2{font:700 clamp(1.6rem,2.4vw,2.2rem)/.95 var(--display);letter-spacing:-.03em;margin:2.6rem 0 1rem}
+.prose{max-width:34em}
+.prose p,.prose li{font:400 1.0625rem/1.25 var(--text)}
+.prose ul,.prose ol{padding-left:1.2em;margin:0 0 .9em}
+.prose blockquote{margin:0 0 .9em;padding-left:.9em;border-left:2px solid var(--ink)}
+.byline{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;font:400 .72rem/1.4 var(--mono);color:var(--ink-3);margin:0 0 1.4rem}
+.byline b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.howto{font:400 .9375rem/1.25 var(--text);color:var(--ink);border-top:1px solid var(--ink);padding-top:.8rem;margin:0 0 2rem;max-width:34em}
+.tbd,.prose .tbd,.lcard .entry .tbd{font:400 .72rem/1.4 var(--mono);color:var(--ink-3);border:1px dashed var(--pend);padding:.55rem .7rem;margin:0 0 .9em;max-width:34em}
+
+/* author names in the student's text are links to their study cards */
+a.cite{text-decoration:underline;text-decoration-color:var(--ink-3);text-decoration-thickness:1px;text-underline-offset:3px}
+a.cite:hover,a.cite.on{text-decoration-color:var(--ink);background:var(--petal)}
+
+/* hypotheses */
+.prose.lead p{font:400 1.375rem/1.15 var(--text);letter-spacing:-.005em;margin:0 0 1.1rem}
+.hyps{list-style:none;padding:0;margin:0;display:grid;gap:1rem;max-width:34em}
+.hyp{display:grid;grid-template-columns:2.6rem 1fr;gap:.2rem;padding:.35rem 0;border-radius:2px;scroll-margin-top:30vh}
+.hn{font:600 .8rem/1.6 var(--mono)}
+.hb p{margin:0 0 .45em}
+.hb .ht{font-weight:700}
+.hsrc{font:400 .7rem/1.4 var(--mono);color:var(--ink-3);margin:.15rem 0 0}
+.hsrc a.cite{margin-right:.7em}
+.hsrc.none{font-style:normal}
+.hyp .hb > p:not(.hsrc):not(.tbd){text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:3px;text-underline-offset:4px;text-decoration-skip-ink:none;transition:text-decoration-color .15s ease}
+.hyp.cited .hb > p:not(.hsrc):not(.tbd){text-decoration-color:var(--flower)}
+.hyp.cited .hn{color:var(--flower)}
+.hyp.cited .tbd{border-color:var(--flower);color:var(--ink)}
+.hyp.lit{background:var(--petal);box-shadow:0 0 0 .4rem var(--petal)}
+.hyp.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,40%{background:var(--petal);box-shadow:0 0 0 .4rem var(--petal)}100%{background:transparent;box-shadow:0 0 0 .4rem transparent}}
+
+.refs{margin-top:3.2rem;border-top:1px solid var(--ink);padding-top:.2rem;max-width:34em}
+.refs h2{font-size:1.1rem;letter-spacing:-.01em;margin:1rem 0 .8rem}
+.refs .prose p,.refs .prose li{font:400 .78rem/1.45 var(--mono);color:var(--ink-2)}
+.reflist{list-style:none;padding:0;margin:0;display:grid;gap:.6rem}
+.reflist li{font:400 .72rem/1.45 var(--mono);color:var(--ink-2);padding-left:1.6em;text-indent:-1.6em;overflow-wrap:anywhere}
+.reflist em{font-style:italic}
+.reflist a{color:var(--ink)}
+
+/* ---------- swarm labels (the focusable handles of each swarm) ---------- */
+.swarm-labels{position:fixed;inset:0;z-index:3;pointer-events:none}
+.sl{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;gap:.15rem;pointer-events:none;will-change:transform;transition:opacity .3s ease}
+.sl button{pointer-events:auto;font:700 .78rem/1.1 var(--text);color:var(--ink);background:none;border:0;padding:.18rem .3rem;cursor:pointer;white-space:nowrap;text-shadow:var(--halo)}
+.sl button:hover,.sl button.on{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--flower)}
+.sl .n{font:400 .66rem/1.2 var(--mono);color:var(--ink-2);white-space:nowrap;text-shadow:var(--halo)}
+.sl.on .n{color:var(--ink)}
+.sl.off{opacity:0}
+.sl.off button{pointer-events:none}
+
+/* caption under the gathered swarm */
+.gcap{position:fixed;z-index:3;left:0;top:0;transform:translateX(-50%);font:400 .7rem/1.45 var(--mono);color:var(--ink-2);text-align:center;max-width:22rem;pointer-events:none;opacity:0;transition:opacity .3s ease}
+.gcap b{color:var(--ink);font-weight:600}
+.gcap.on{opacity:1}
+
+/* ---------- tooltip ---------- */
+.tip{position:fixed;z-index:30;left:0;top:0;width:min(340px,calc(100vw - 32px));background:var(--card);color:var(--ink);border:1px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);padding:.75rem .85rem .8rem;font:400 .72rem/1.45 var(--mono);pointer-events:none}
+.tip .tn{font-weight:600;color:var(--ink);margin-bottom:.45rem}
+.tip .tc{font:400 .8125rem/1.3 var(--text);margin:0 0 .5rem}
+.tip .tc b{font-weight:700}
+.tip .tc i{font-style:italic}
+.tip .tf{color:var(--ink-2)}
+.tip .th{margin-top:.45rem;color:var(--ink-3)}
+
+/* ---------- card ---------- */
+.scrim{position:fixed;inset:0;z-index:9;background:transparent;cursor:default}
+.lcard:focus{outline:none}
+.lcard .ncap{display:none}
+.lcard .entry{border-top:1px solid var(--ink);padding-top:.85rem;margin-top:1rem}
+body.carded main{opacity:.05}
+body.carded main .blk{pointer-events:none}
+.lcard{position:fixed;z-index:10;left:0;top:0;width:var(--card-w,520px);max-height:calc(100vh - var(--bar-h) - 40px);overflow:auto;overscroll-behavior:contain;
+  background:var(--card);border:1px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);padding:1.1rem 1.3rem 1rem;transition:opacity .25s ease}
+.lcard.swap{opacity:0}
+.lcard .ctop{display:flex;align-items:center;justify-content:space-between;gap:1rem;font:400 .7rem/1 var(--mono);color:var(--ink-3);margin:0 0 .9rem}
+.lcard .x{font:500 .95rem/1 var(--mono);background:none;border:1px solid transparent;color:var(--ink);cursor:pointer;width:2.1rem;height:2.1rem;margin:-.45rem -.6rem -.45rem 0}
+.lcard .x:hover{border-color:var(--ink)}
+.lcard h2{font:700 clamp(1.5rem,2.2vw,1.9rem)/.95 var(--display);letter-spacing:-.025em;margin:0 0 .8rem}
+.lcard h3{font:700 .9375rem/1.15 var(--text);margin:1.3rem 0 .6rem;padding-top:.8rem;border-top:1px solid var(--ink)}
+.lcard .cit{font:400 .75rem/1.45 var(--mono);color:var(--ink-2);margin:0 0 .5rem}
+.lcard .cit em{font-style:italic}
+.lcard .lnk{font:400 .72rem/1.4 var(--mono);margin:0 0 .4rem;display:flex;flex-wrap:wrap;gap:.2rem 1.1rem}
+.lcard .acc{font:400 .72rem/1.45 var(--mono);color:var(--ink);background:var(--paper);border-left:2px solid var(--ink);padding:.5rem .65rem;margin:.7rem 0 0}
+.lcard .same{font:400 .72rem/1.4 var(--mono);color:var(--ink-2);margin:.6rem 0 0}
+.lcard .entry p,.lcard .entry li{font:400 1rem/1.3 var(--text)}
+.lcard .entry ul,.lcard .entry ol{padding-left:1.2em}
+.lcard .feeds{font:400 .75rem/1.4 var(--mono);color:var(--ink-2);margin:1.1rem 0 0;display:flex;flex-wrap:wrap;gap:.3rem .9rem;align-items:baseline}
+.lcard .feeds a{font-weight:600;color:var(--ink)}
+.lcard .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.6rem;margin:1.2rem -1.3rem -1rem;padding:.6rem 1.3rem;border-top:1px solid var(--ink);font:400 .72rem/1.2 var(--mono);position:sticky;bottom:-1rem;background:var(--card)}
+.lcard .nav button{font:500 .72rem/1.2 var(--mono);color:var(--ink);background:none;border:0;cursor:pointer;padding:.45rem 0;text-align:left}
+.lcard .nav button:last-child{text-align:right}
+.lcard .nav button:hover span{text-decoration:underline;text-underline-offset:3px}
+.lcard .nav .ar{font-size:1.05rem;line-height:0;vertical-align:-.08em}
+.lcard .nav .pos{color:var(--ink-3);text-align:center;font-variant-numeric:tabular-nums}
+
+/* their number next to ours: one scale per unit within a card */
+.pair{margin:0 0 1.05rem}
+.pair h4{font:700 .8125rem/1.25 var(--text);margin:0 0 .4rem}
+.prow{display:grid;grid-template-columns:var(--who-w,8.2rem) 1fr;align-items:center;gap:.6rem;min-height:1.5rem}
+.prow .who{font:400 .68rem/1.2 var(--mono);color:var(--ink-2);text-align:right}
+.prow .track{position:relative;height:1.5rem;margin-right:5.4rem;border-left:1px solid var(--ink)}
+.prow .bar{position:absolute;left:0;top:50%;height:12px;transform:translateY(-50%);border-radius:0 4px 4px 0}
+.prow.theirs .bar{background:var(--ink-3)}
+.prow.ours .bar{background:var(--ink)}
+.prow .val{position:absolute;top:50%;transform:translateY(-50%);margin-left:6px;font:500 .72rem/1 var(--mono);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.prow .bar.lb::after{content:"";position:absolute;left:100%;top:50%;width:12px;border-top:2px dotted var(--ink-3);transform:translateY(-50%)}
+.prow.sealed .track{height:auto;margin-right:0;border-left:1px solid var(--ink)}
+.prow .seal{display:block;font:400 .66rem/1.3 var(--mono);color:var(--ink-2);background:repeating-linear-gradient(135deg,var(--dim) 0 6px,#EAE4D9 6px 12px);border:1px dashed var(--pend);border-left:0;padding:.3rem .5rem;margin:.15rem 0}
+.pair .def{font:400 .66rem/1.45 var(--mono);color:var(--ink-3);margin:.35rem 0 0}
+.pairs-note{font:400 .66rem/1.45 var(--mono);color:var(--ink-3);margin:-.2rem 0 .8rem}
+
+/* ---------- phones and narrow windows: the swarms sit in a panel under the top bar ---------- */
+@media (max-width:899px){
+  .panelbg{display:block;position:fixed;left:0;right:0;top:0;height:calc(var(--bar-h) + var(--panel-h));background:var(--paper);border-bottom:1px solid var(--ink);z-index:1}
+  #gl{z-index:2;pointer-events:none}
+  .swarm-labels{z-index:4}
+  .gcap{z-index:4}
+  main{z-index:0}
+  .col{width:auto;margin:0 16px;padding:calc(var(--bar-h) + var(--panel-h) + 1.4rem) 0 6rem;background:none}
+  .bar-in{gap:.9rem;padding-inline:16px}
+  .brand{display:none}
+  h1{font-size:2.6rem}
+  .sl button{font-size:.7rem;padding:.12rem .2rem}
+  .sl .n{font-size:.58rem;line-height:1.1}
+  .sl{gap:0}
+  .lcard{left:0!important;right:0;top:calc(var(--bar-h) + var(--panel-h))!important;bottom:0;width:auto;max-height:none;border-left:0;border-right:0;border-bottom:0;box-shadow:none;padding:1rem 16px 0}
+  .lcard .nav{margin:1.2rem -16px 0;padding:.6rem 16px calc(.6rem + env(safe-area-inset-bottom,0px));bottom:0}
+  .prow{grid-template-columns:var(--who-w,7.4rem) 1fr}
+  .prow .track{margin-right:4.8rem}
+  .lcard .ncap{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  main,.sl,.gcap,.lcard,a.cite,.hyp .hb > p{transition:none!important}
+  .hyp.flash{animation:none;background:var(--petal)}
+}
